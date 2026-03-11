@@ -14,6 +14,9 @@ class Dynwmis < Formula
     # Remove unused omp.h include (OpenMP not used)
     inreplace "app/parse_parameters.h", "#include <omp.h>\n", ""
 
+    # Remove unused MPI dependency from bundled KaHIP
+    inreplace "extern/wmis/extern/KaHIP/CMakeLists.txt", "find_package(MPI REQUIRED)", "# find_package(MPI REQUIRED)"
+
     # Remove stale CMakeCache from release tarball
     rm_rf "build"
 
