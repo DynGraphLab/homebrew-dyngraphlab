@@ -15,6 +15,9 @@ class Dynwmis < Formula
     # Replace -march=native for portability
     inreplace "CMakeLists.txt", "-march=native", "-mtune=generic"
 
+    # Remove stale CMakeCache from release tarball
+    rm_rf "build"
+
     mkdir "build" do
       system "cmake", "..", *std_cmake_args, "-DCMAKE_BUILD_TYPE=Release"
       system "make"
