@@ -19,7 +19,7 @@ class Dynwmis < Formula
     rm_rf "build"
 
     mkdir "build" do
-      system "cmake", "..", *std_cmake_args, "-DCMAKE_BUILD_TYPE=Release"
+      system "cmake", "..", *std_cmake_args, "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
       system "make"
     end
 
