@@ -9,7 +9,7 @@ class Dyndeltaorientation < Formula
 
   def install
     # Remove unused omp.h include (OpenMP not used)
-    inreplace "app/parse_parameters.h", "#include <omp.h>\n", ""
+    inreplace "app/parse_parameters.h", "#include <omp.h>", "// #include <omp.h>"
 
     mkdir "build" do
       system "cmake", "..", *std_cmake_args, "-DCMAKE_BUILD_TYPE=Release", "-DILP=Off"

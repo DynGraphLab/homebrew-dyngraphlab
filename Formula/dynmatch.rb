@@ -12,12 +12,10 @@ class Dynmatch < Formula
     inreplace "CMakeLists.txt", "-march=native", "-mtune=generic"
 
     # Remove -fno-stack-limit (unsupported by clang on macOS)
-    inreplace "CMakeLists.txt",
-      "CHECK_CXX_COMPILER_FLAG(-fno-stack-limit COMPILER_SUPPORTS_FNOSTACKLIMITS)\nif(COMPILER_SUPPORTS_FNOSTACKLIMITS)\n  add_definitions(-fno-stack-limit)\nendif()",
-      ""
+    inreplace "CMakeLists.txt", "add_definitions(-fno-stack-limit)", "# add_definitions(-fno-stack-limit)"
 
     # Remove unused omp.h include (OpenMP not used)
-    inreplace "app/parse_parameters.h", "#include <omp.h>\n", ""
+    inreplace "app/parse_parameters.h", "#include <omp.h>", "// #include <omp.h>"
 
     mkdir "build" do
       system "cmake", "..", *std_cmake_args, "-DCMAKE_BUILD_TYPE=Release"

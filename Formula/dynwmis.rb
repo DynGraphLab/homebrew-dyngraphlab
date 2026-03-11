@@ -12,15 +12,15 @@ class Dynwmis < Formula
     inreplace "CMakeLists.txt", "-march=native", "-mtune=generic"
 
     # Remove unused omp.h include (OpenMP not used)
-    inreplace "app/parse_parameters.h", "#include <omp.h>\n", ""
+    inreplace "app/parse_parameters.h", "#include <omp.h>", "// #include <omp.h>"
 
     # Remove -fno-stack-limit from bundled KaHIP (unsupported by clang on macOS)
     inreplace "extern/wmis/extern/KaHIP/CMakeLists.txt",
-      "CHECK_CXX_COMPILER_FLAG(-fno-stack-limit COMPILER_SUPPORTS_FNOSTACKLIMITS)\nif(COMPILER_SUPPORTS_FNOSTACKLIMITS)\n  add_definitions(-fno-stack-limit)\nendif()",
-      ""
+      "add_definitions(-fno-stack-limit)", "# add_definitions(-fno-stack-limit)"
 
     # Remove unused MPI dependency from bundled KaHIP
-    inreplace "extern/wmis/extern/KaHIP/CMakeLists.txt", "find_package(MPI REQUIRED)", "# find_package(MPI REQUIRED)"
+    inreplace "extern/wmis/extern/KaHIP/CMakeLists.txt",
+      "find_package(MPI REQUIRED)", "# find_package(MPI REQUIRED)"
 
     # Remove stale CMakeCache from release tarball
     rm_rf "build"
