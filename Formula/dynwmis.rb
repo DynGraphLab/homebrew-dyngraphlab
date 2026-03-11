@@ -7,13 +7,12 @@ class Dynwmis < Formula
 
   depends_on "cmake" => :build
 
-  fails_with :clang do
-    cause "Requires OpenMP support"
-  end
-
   def install
     # Replace -march=native for portability
     inreplace "CMakeLists.txt", "-march=native", "-mtune=generic"
+
+    # Remove unused omp.h include (OpenMP not used)
+    inreplace "app/parse_parameters.h", "#include <omp.h>\n", ""
 
     # Remove stale CMakeCache from release tarball
     rm_rf "build"
